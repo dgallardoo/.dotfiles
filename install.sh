@@ -1,31 +1,36 @@
 #!/bin/sh
-# Script to link configuration files.
+# Script to link configuration files from the repository to the home directory.
 
-set -e # Exit immediately if a command exits with a non-zero status.
+set -e
 
-echo "Running dotfiles configuration linking script..."
-
-# The script runs from the root of the cloned dotfiles repository.
 DOTFILES_ROOT_DIR=$(pwd)
-TARGET_LOCAL_CONFIG_DIR="${HOME}/.config"
 
-mkdir -p "${TARGET_LOCAL_CONFIG_DIR}" # Ensure the target directory exists
+# Helper to create symlinks, ensuring parent directories exist
+link_file() {
+    local src="$1"
+    local dst="$2"
+    
+    mkdir -p "$(dirname "$dst")"
+    echo "Linking $dst -> $src"
+    ln -sf "$src" "$dst"
+}
 
-SOURCE_STARSHIP_CONFIG_FILE="${DOTFILES_ROOT_DIR}/.config/starship.toml"
-TARGET_STARSHIP_CONFIG_FILE="${TARGET_LOCAL_CONFIG_DIR}/starship.toml"
-echo "Linking Starship configuration..."
-# Create the symlink, -f to force overwrite if it exists, -s for symbolic
-ln -sf "${SOURCE_STARSHIP_CONFIG_FILE}" "${TARGET_STARSHIP_CONFIG_FILE}"
+echo "Starting dotfiles linking..."
 
-SOURCE_GITCONFIG_FILE="${DOTFILES_ROOT_DIR}/.gitconfig"
-TARGET_GITCONFIG_FILE="${HOME}/.gitconfig"
-echo "Linking .gitconfig..."
-ln -sf "${SOURCE_GITCONFIG_FILE}" "${TARGET_GITCONFIG_FILE}"
+# --- Configuration Mappings ---
 
-echo "Linking .zshrc..."
-ln -sf "${DOTFILES_ROOT_DIR}/.zshrc" "${HOME}/.zshrc"
+# Core Git
+link_file "$DOTFILES_ROOT_DIR/.gitconfig" "$HOME/.gitconfig"
 
-echo "Linking .zprofile..."
-ln -sf "${DOTFILES_ROOT_DIR}/.zprofile" "${HOME}/.zprofile"
+# Shell (Zsh)
+link_file "$DOTFILES_ROOT_DIR/.zshrc" "$HOME/.zshrc"
+link_file "$DOTFILES_ROOT_DIR/.zprofile" "$HOME/.zprofile"
 
-echo "Dotfiles configuration linking script finished."
+# Starship
+link_file "$DOTFILES_ROOT_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
+
+# Editors & Multiplexers
+link_file "$DOTFILES_ROOT_DIR/.vimrc" "$HOME/.vimrc"
+link_file "$DOTFILES_ROOT_DIR/.tmux.conf" "$HOME/.tmux.conf"
+
+echo "Linking finished!"
