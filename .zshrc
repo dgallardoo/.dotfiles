@@ -12,3 +12,6 @@ eval "$(pyenv init -)"
 # Starship prompt (after oh-my-zsh so it overrides the theme)
 eval "$(starship init zsh)"
 
+# fzf integration (Homebrew)
+source <(fzf --zsh)
+
