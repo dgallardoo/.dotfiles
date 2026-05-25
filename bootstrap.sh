@@ -79,6 +79,31 @@ configure_tool_for_shell() {
     echo "Configuring $tool_name for $shell_name..."
 
     case "$tool_name" in
+        zsh_plugins)
+            if [ "$shell_name" = "zsh" ]; then
+                local ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+                mkdir -p "$ZSH_CUSTOM/plugins"
+                
+                # Plugin: zsh-autosuggestions
+                if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+                    echo "Installing zsh-autosuggestions..."
+                    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+                fi
+                
+                # Plugin: zsh-syntax-highlighting
+                if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+                    echo "Installing zsh-syntax-highlighting..."
+                    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+                fi
+
+                # Plugin: zsh-completions
+                if [ ! -d "$ZSH_CUSTOM/plugins/zsh-completions" ]; then
+                    echo "Installing zsh-completions..."
+                    git clone https://github.com/zsh-users/zsh-completions "$ZSH_CUSTOM/plugins/zsh-completions"
+                fi
+            fi
+            return 0
+            ;;
         starship)
             if ! command_exists starship; then
                 echo "Starship command not found. Attempting to install to ${USER_BIN_DIR}..."
@@ -175,7 +200,7 @@ fi
 
 
 # 3. Configure tools
-TOOLS_TO_CONFIGURE="starship" # Add other tools here, space-separated, e.g., "starship another_tool"
+TOOLS_TO_CONFIGURE="zsh_plugins starship" # Add other tools here, space-separated, e.g., "starship another_tool"
 
 if is_shell_supported "$CURRENT_SHELL"; then
     echo "Proceeding with tool configurations for $CURRENT_SHELL."

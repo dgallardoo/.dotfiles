@@ -22,4 +22,10 @@ TARGET_GITCONFIG_FILE="${HOME}/.gitconfig"
 echo "Linking .gitconfig..."
 ln -sf "${SOURCE_GITCONFIG_FILE}" "${TARGET_GITCONFIG_FILE}"
 
+echo "Linking .zshrc..."
+ln -sf "${DOTFILES_ROOT_DIR}/.zshrc" "${HOME}/.zshrc"
+
+echo "Linking .zprofile..."
+ln -sf "${DOTFILES_ROOT_DIR}/.zprofile" "${HOME}/.zprofile"
+
 echo "Dotfiles configuration linking script finished."
