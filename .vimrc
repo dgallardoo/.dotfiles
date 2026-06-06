@@ -3,7 +3,10 @@ set nocompatible               " Disable vi compatibility mode
 set encoding=utf-8             " Set file encoding to UTF-8
 set fileformat=unix            " Use Unix line endings
 set mouse=a                    " Enable mouse support
-set clipboard=unnamedplus      " Use system clipboard
+if has('mouse_sgr')
+  set ttymouse=sgr             " Enable modern mouse tracking
+endif
+set clipboard=unnamed,unnamedplus " Use system clipboard
 
 " ===== VISUAL IMPROVEMENTS =====
 syntax enable                  " Enable syntax highlighting
@@ -12,6 +15,8 @@ set relativenumber             " Show relative line numbers
 set cursorline                 " Highlight current line
 set showmatch                  " Highlight matching brackets
 
+" Copy selection to clipboard immediately on mouse release
+vnoremap <LeftRelease> y<LeftRelease>
 
 " ===== INDENTATION & FORMATTING =====
 set autoindent                 " Auto-indent new lines
