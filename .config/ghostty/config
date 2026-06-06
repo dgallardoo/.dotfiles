@@ -1,0 +1,17 @@
+# Font settings (uncomment and change to use custom fonts)
+# font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+
+# Window layout
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+window-decoration = true
+window-theme = dark
+
+# Behaviors
+confirm-close-surface = false
+mouse-shift-capture = true
+
+# Keybindings
+keybind = shift+enter=text:\n

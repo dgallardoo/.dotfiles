@@ -14,4 +14,3 @@ eval "$(starship init zsh)"
 
 # fzf integration (Homebrew)
 source <(fzf --zsh)
-

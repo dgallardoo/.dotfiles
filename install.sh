@@ -26,8 +26,9 @@ link_file "$DOTFILES_ROOT_DIR/.gitconfig" "$HOME/.gitconfig"
 link_file "$DOTFILES_ROOT_DIR/.zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_ROOT_DIR/.zprofile" "$HOME/.zprofile"
 
-# Starship
+# Starship & Terminal (Ghostty)
 link_file "$DOTFILES_ROOT_DIR/.config/starship.toml" "$HOME/.config/starship.toml"
+link_file "$DOTFILES_ROOT_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
 
 # Editors & Multiplexers
 link_file "$DOTFILES_ROOT_DIR/.vimrc" "$HOME/.vimrc"
