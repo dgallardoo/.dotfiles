@@ -43,4 +43,56 @@ install_zsh_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autos
 install_zsh_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 install_zsh_plugin "zsh-completions" "https://github.com/zsh-users/zsh-completions"
 
+# --- 3. Font Installation ---
+install_font() {
+    if [ "$(uname)" = "Darwin" ]; then
+        # Check if already installed in system or user font directories first
+        if [ -f "$HOME/Library/Fonts/FiraCodeNerdFontMono-Regular.ttf" ] || [ -f "/Library/Fonts/FiraCodeNerdFontMono-Regular.ttf" ]; then
+            echo "Fira Code Nerd Font is already installed."
+            return 0
+        fi
+
+        # If Homebrew is installed, use it to install the font
+        if command -v brew >/dev/null 2>&1; then
+            echo "Installing Fira Code Nerd Font via Homebrew Cask..."
+            # Check if font is already installed via brew to avoid redundancy
+            if ! brew list --cask font-fira-code-nerd-font >/dev/null 2>&1; then
+                brew install --cask font-fira-code-nerd-font
+                echo "Fira Code Nerd Font installed successfully via Homebrew!"
+                return 0
+            fi
+        fi
+
+        # Fallback to manual download if Homebrew is not present or installation failed
+        echo "Homebrew not found or not used. Downloading Fira Code Nerd Font manually..."
+        local font_dir="$HOME/Library/Fonts"
+        mkdir -p "$font_dir"
+        local tmp_zip="/tmp/FiraCode.zip"
+        curl -fLo "$tmp_zip" "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip"
+        unzip -o "$tmp_zip" "*.ttf" -d "$font_dir"
+        rm -f "$tmp_zip"
+        echo "Fira Code Nerd Font installed manually to ~/Library/Fonts!"
+    else
+        # Linux installation (XDG directory standard)
+        local font_dir="$HOME/.local/share/fonts"
+        if [ ! -f "$font_dir/FiraCodeNerdFontMono-Regular.ttf" ] && [ ! -f "$font_dir/FiraCodeNerdFont-Regular.ttf" ]; then
+            echo "Installing Fira Code Nerd Font on Linux..."
+            mkdir -p "$font_dir"
+            local tmp_zip="/tmp/FiraCode.zip"
+            curl -fLo "$tmp_zip" "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip"
+            unzip -o "$tmp_zip" "*.ttf" -d "$font_dir"
+            rm -f "$tmp_zip"
+            if command -v fc-cache >/dev/null 2>&1; then
+                echo "Rebuilding font cache..."
+                fc-cache -f
+            fi
+            echo "Fira Code Nerd Font installed successfully!"
+        else
+            echo "Fira Code Nerd Font is already installed."
+        fi
+    fi
+}
+
+install_font
+
 echo "Bootstrap finished! Please restart your terminal or run 'source ~/.zshrc'."

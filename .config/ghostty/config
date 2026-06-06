@@ -1,5 +1,5 @@
-# Font settings (uncomment and change to use custom fonts)
-# font-family = "JetBrainsMono Nerd Font"
+# Font settings
+font-family = "FiraCode Nerd Font Mono"
 font-size = 13
 
 # Window layout
