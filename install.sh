@@ -21,6 +21,7 @@ echo "Starting dotfiles linking..."
 
 # Core Git
 link_file "$DOTFILES_ROOT_DIR/.gitconfig" "$HOME/.gitconfig"
+link_file "$DOTFILES_ROOT_DIR/.gitignore" "$HOME/.gitignore"
 
 # Shell (Zsh)
 link_file "$DOTFILES_ROOT_DIR/.zshrc" "$HOME/.zshrc"

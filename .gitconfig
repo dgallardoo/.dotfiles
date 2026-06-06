@@ -4,6 +4,6 @@
 [init]
 	defaultBranch = main
 [core]
-	excludesfile = /home/daniel/.gitignore
+	excludesfile = ~/.gitignore
 [credential]
-	helper = store
+	helper = osxkeychain
